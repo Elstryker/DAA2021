@@ -23,19 +23,28 @@ def describe(df : DataFrame, cat = ''):
     else:
         print(df[cat].describe())
 
-# Calculate info of the selected category
-# print(df["WebActivity"].describe())
-
 # See if there is missing values
-# print(df.isna().any())
+def anyMissingValues(df : DataFrame):
+    print(df.isna().any())
 
 # Calculate the sum of missing values
-# print(df.isna().sum())
+def missingValuesSum(df : DataFrame):
+    print(df.isna().sum())
 
 # Get unique values of category
-# print(df.WebActivity.unique())
-# print(df.WebActivity.unique().size)
+def unique(df : DataFrame, cat, size=False):
+    if size:
+        print(df[cat].unique().size)
+    else:
+        print(df[cat].unique())
 
 # Grouping categories
-# print(df.groupby(by=['Gender']).mean())
-# print(df.groupby(by=['SentimentRating','Gender']).count())
+def groupBy(df : DataFrame, cat, method = 'mean'):
+    if method == 'mean':
+        print(df.groupby(by=cat).mean())
+    elif method == 'count':
+        print(df.groupby(by=cat).count())
+    elif method == 'sum':
+        print(df.groupby(by=cat).sum())
+    else:
+        pass
