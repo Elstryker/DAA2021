@@ -7,6 +7,8 @@ from sklearn import preprocessing
 from sklearn.svm import SVC
 from sklearn.model_selection import *
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
 
 # View first n values of the file
 def head(df : DataFrame, num = 5):
@@ -39,7 +41,7 @@ def unique(df : DataFrame, cat, size=False):
         print(df[cat].unique())
 
 # Grouping categories
-def groupBy(df : DataFrame, cat, method = 'mean'):
+def groupBy(df : DataFrame, cat, method = 'count'):
     if method == 'mean':
         print(df.groupby(by=cat).mean())
     elif method == 'count':
@@ -48,3 +50,18 @@ def groupBy(df : DataFrame, cat, method = 'mean'):
         print(df.groupby(by=cat).sum())
     else:
         pass
+        
+def replace_values_column(df : DataFrame, col, to_replace, new_value ):
+    if to_replace == "NULL":
+        df[col].fillna(new_value, inplace = True)
+    df[col] = df[col].replace(to_replace,new_value)
+    return df
+
+def to_csv(predictions,name="./output.csv"):
+    f = open(name, "a")
+    f.write("RowId,Speed_Diff\n")
+    for index,prediction in enumerate(predictions):
+        f.write(str(index+1)+","+prediction+"\n")
+    f.close()
+        
+    
