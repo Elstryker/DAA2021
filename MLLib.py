@@ -1,14 +1,4 @@
-import numpy as np
-import pandas as pd
 from pandas.core.frame import DataFrame
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn import preprocessing 
-from sklearn.svm import SVC
-from sklearn.model_selection import *
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
 
 # View first n values of the file
 def head(df : DataFrame, num = 5):
@@ -29,7 +19,7 @@ def describe(df : DataFrame, cat = ''):
 def anyMissingValues(df : DataFrame):
     results = df.isna().any()
     print(results)
-    return df.isnull().values.any() #retorna se algum valor está em falta no dataset recebido
+    return df.isnull().values.any() #retorna true se algum valor está em falta no dataset recebido
 
 # Calculate the sum of missing values
 def missingValuesSum(df : DataFrame):
@@ -52,18 +42,3 @@ def groupBy(df : DataFrame, cat, method = 'count'):
         print(df.groupby(by=cat).sum())
     else:
         pass
-        
-def replace_values_column(df : DataFrame, col, to_replace, new_value ):
-    if to_replace == "NULL":
-        df[col].fillna(new_value, inplace = True)
-    df[col] = df[col].replace(to_replace,new_value)
-    return df
-
-def to_csv(predictions,name="./output.csv"):
-    f = open(name, "w")
-    f.write("RowId,Speed_Diff\n")
-    for index,prediction in enumerate(predictions):
-        f.write(str(index+1)+","+prediction+"\n")
-    f.close()
-        
-    
