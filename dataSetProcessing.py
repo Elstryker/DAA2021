@@ -35,29 +35,8 @@ def treat_dataset(df):
     
     df = df.replace("céu nublado",5)
     
-    #a coluna AVERAGE_RAIN tinha valores repetidos mas com nomes diferentes portanto foi tratada
-    
-    MLLib.replace_values_column(df, "AVERAGE_RAIN", ["trovoada com chuva","trovoada com chuva leve"], "trovoada")
-    
-    MLLib.replace_values_column(df, "AVERAGE_RAIN", ["aguaceiros","chuva"],"chuva moderada")
-    
-    MLLib.replace_values_column(df, "AVERAGE_RAIN", ["chuva leve","chuvisco e chuva fraca","chuvisco fraco","aguaceiros fracos",], "chuva fraca")
-    
-    MLLib.replace_values_column(df, "AVERAGE_RAIN", ["chuva de intensidade pesado","chuva de intensidade pesada"], "chuva forte")
-    
-    MLLib.replace_values_column(df, 'AVERAGE_RAIN', "NULL", "sem chuva") #existem tantos nulos que talvez seja melhor remover a coluna
-    
-    #transformar os valores categoricos em valores numéricos
-    
-    df = df.replace("sem chuva",-1)
-
-    df = df.replace("chuva fraca",0)
-    
-    df = df.replace("chuva moderada",1)
-    
-    df = df.replace("chuva forte",2)
-    
-    df = df.replace("trovoada",4)
+    #REMOVING AVERAGE_RAIN pois tem muitas gaps
+    df = df.drop("AVERAGE_RAIN",axis=1)
     
     #LUMINOSITY column to numerical values
     
@@ -131,7 +110,6 @@ def treat_dataset(df):
         df['evening'] = evening_list
         df['early_morning'] = early_morning_list
     df = df.drop("record_date",axis=1)
-    df = df.drop("AVERAGE_RAIN",axis=1)
     
     return df
 
