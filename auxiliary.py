@@ -7,7 +7,7 @@ def replace_values_column(df : DataFrame, col, to_replace, new_value ):
     df[col] = df[col].replace(to_replace,new_value)
     return df
 
-# 
+# Write predictions to csv
 def to_csv(predictions,name="./output.csv"):
     f = open(name, "w")
     f.write("RowId,Speed_Diff\n")

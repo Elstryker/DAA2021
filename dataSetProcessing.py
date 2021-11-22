@@ -1,8 +1,9 @@
 import pandas as pd
+from pandas.core.frame import DataFrame
 import auxiliary as aux
 import holidays      
 
-def treat_dataset(df):
+def treat_dataset(df : DataFrame):
 
     #Todos os valores são iguais nessas colunas portanto podemos remove-las
     df = df.drop(["city_name","AVERAGE_PRECIPITATION"],axis=1)
@@ -52,17 +53,17 @@ def treat_dataset(df):
         
         morning,lunch_time,afternoon,dinner_time,evening,early_morning=(0 for i in range(6))
         
-        if date_time>=morning_start and date_time<lunch_start:
+        if lunch_start > date_time >= morning_start:
             morning=1
-        elif date_time>=lunch_start and date_time<noon_start:
+        elif noon_start > date_time >= lunch_start:
             lunch_time=1
-        elif date_time>=noon_start and date_time<dinner_start:
+        elif dinner_start > date_time >= noon_start:
             afternoon=1
-        elif date_time>=dinner_start and date_time<evening_start:
+        elif evening_start > date_time >= dinner_start:
             dinner_time=1
-        elif date_time>=evening_start and date_time<early_morning_start:
+        elif early_morning_start > date_time >= evening_start:
             evening=1
-        elif date_time>=early_morning_start and date_time<morning_start:
+        elif morning_start > date_time >= early_morning_start:
             early_morning=1
         
         df.loc[i,'weekend'] = weekend
