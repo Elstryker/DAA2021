@@ -27,9 +27,7 @@ def describe(df : DataFrame, cat = ''):
 
 # See if there is missing values
 def anyMissingValues(df : DataFrame):
-    results = df.isna().any()
-    print(results)
-    return df.isnull().values.any() #retorna se algum valor está em falta no dataset recebido
+    print(df.isna().any())
 
 # Calculate the sum of missing values
 def missingValuesSum(df : DataFrame):
@@ -60,7 +58,7 @@ def replace_values_column(df : DataFrame, col, to_replace, new_value ):
     return df
 
 def to_csv(predictions,name="./output.csv"):
-    f = open(name, "w")
+    f = open(name, "a")
     f.write("RowId,Speed_Diff\n")
     for index,prediction in enumerate(predictions):
         f.write(str(index+1)+","+prediction+"\n")
