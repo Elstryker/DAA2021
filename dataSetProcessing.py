@@ -131,6 +131,7 @@ def treat_dataset(df):
         df['evening'] = evening_list
         df['early_morning'] = early_morning_list
     df = df.drop("record_date",axis=1)
+    df = df.drop("AVERAGE_RAIN",axis=1)
     
     return df
 
@@ -145,8 +146,8 @@ def train_model():
     y = df['AVERAGE_SPEED_DIFF'].to_frame()
     
     
-    # Instantiate model with 100 decision trees
-    rf = RandomForestClassifier(n_estimators=100)
+    # Instantiate model with 1000 decision trees
+    rf = RandomForestClassifier(n_estimators=1000)
     # Train the model on training data
     rf.fit(x, y);
     
