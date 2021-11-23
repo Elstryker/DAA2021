@@ -18,15 +18,29 @@ def train_model():
     y = df['AVERAGE_SPEED_DIFF'].to_frame()
     
     # Instantiate model with 1000 decision trees
-    x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25,random_state=2021)
+    # x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25,random_state=2021)
 
-    param_grid = {'n_estimators' : [10,100,1000], 'criterion': ['gini','entropy'], }
-    rf = RandomForestClassifier(n_estimators=1000,criterion='entropy')
+    # param_grid = {'n_estimators' : [10,100,1000], 'criterion': ['gini','entropy'], }
+    # grid = GridSearchCV(RandomForestClassifier(),param_grid,refit=True,verbose=3)
+
+    # grid.fit(x,ravel(y))
+
+    # print(grid.best_estimator_)
+
+    # print(grid.best_params_)
+
+    # print(grid.best_score_)
+
+    # plot_confusion_matrix(grid,x_test,ravel(y_test))
+
+    # plt.show()
+
+
     # Train the model on training data
     # scores = cross_val_score(rfc,x,ravel(y),cv=10)
     # print(scores)
     # print("Result: %0.2f accuracy with a standard deviation of %0.2f" % (scores.mean(),scores.std()))
-    
+    rf = RandomForestClassifier(n_estimators=1000,criterion='entropy')
     rf.fit(x, ravel(y))
     
     X_test = pd.read_csv("test_data.csv",encoding='latin1')

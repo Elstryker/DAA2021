@@ -8,23 +8,23 @@ def treat_dataset(df : DataFrame):
     #Todos os valores são iguais nessas colunas portanto podemos remove-las
     df = df.drop(["city_name","AVERAGE_PRECIPITATION"],axis=1)
     
-    # #treating AVERAGE_CLOUDINESS column for names that mean the same
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS", ["nuvens quebrados"], "nuvens quebradas")
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS", ["nublado","tempo nublado"], "céu nublado")
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu claro"], "céu limpo")
-    # aux.replace_values_column(df, 'AVERAGE_CLOUDINESS', "NULL", "céu pouco nublado")
+    #treating AVERAGE_CLOUDINESS column for names that mean the same
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS", ["nuvens quebrados"], "nuvens quebradas")
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS", ["nublado","tempo nublado"], "céu nublado")
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu claro"], "céu limpo")
+    df['AVERAGE_CLOUDINESS'] = df['AVERAGE_CLOUDINESS'].interpolate(method='pad')
+    aux.replace_values_column(df, 'AVERAGE_CLOUDINESS', "NULL", "céu pouco nublado")
     
-    # #Transforming categorical values into ordinal ones
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu limpo"],0)
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu pouco nublado"],1)
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["algumas nuvens"],2)
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["nuvens dispersas"],3)
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["nuvens quebradas"],4)
-    # aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu nublado"],5)
+    #Transforming categorical values into ordinal ones
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu limpo"],0)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu pouco nublado"],1)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["algumas nuvens"],2)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["nuvens dispersas"],3)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["nuvens quebradas"],4)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu nublado"],5)
     
     #Removing AVERAGE_RAIN since it's always missing
     df = df.drop("AVERAGE_RAIN",axis=1)
-    df = df.drop("AVERAGE_CLOUDINESS",axis=1)
     
     #LUMINOSITY column to numerical values
     aux.replace_values_column(df,"LUMINOSITY",["DARK"],0)
