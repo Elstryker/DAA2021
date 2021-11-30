@@ -1,0 +1,2 @@
+Local accuracy : almost 0.80
+Public Leaderboatd : 0.824444

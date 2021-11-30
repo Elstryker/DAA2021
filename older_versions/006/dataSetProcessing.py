@@ -17,8 +17,10 @@ def treat_dataset(df : DataFrame):
     #Transforming categorical values into ordinal ones
     aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu limpo"],0)
     aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu pouco nublado"],1)
-    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["algumas nuvens", "nuvens quebradas","nuvens dispersas"],2)
-    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu nublado"],3)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["algumas nuvens"],2)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["nuvens dispersas"],3)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["nuvens quebradas"],4)
+    aux.replace_values_column(df, "AVERAGE_CLOUDINESS",["céu nublado"],5)
     
     #Removing AVERAGE_RAIN since it's always missing
     df = df.drop("AVERAGE_RAIN",axis=1)
@@ -27,8 +29,6 @@ def treat_dataset(df : DataFrame):
     aux.replace_values_column(df,"LUMINOSITY",["DARK"],0)
     aux.replace_values_column(df,"LUMINOSITY",["LOW_LIGHT"],1)
     aux.replace_values_column(df,"LUMINOSITY",["LIGHT"],2)
-    # df = df.drop("LUMINOSITY",axis=1)
-    
 
     #Turning date string to datetime
     df['record_date'] = pd.to_datetime(df['record_date'])
@@ -42,18 +42,6 @@ def treat_dataset(df : DataFrame):
         date = str(date_time.day) + "-" + str(date_time.month) + "-" + str(year)
         portugal_holidays = holidays.Portugal(years=year)
         holiday = int(date in portugal_holidays)
-        
-        #month = date_time.month
-        #if month<4:
-        #    season=1
-        #elif month<7:
-        #    season=2
-        #elif month<10:
-        #    season=3
-        #elif month<13:
-        #    season=4
-        #else:
-        #    print("This would not work.")
         
         #date_times for comparison
         morning_start = date_time.replace(hour=7, minute=0)
@@ -86,7 +74,6 @@ def treat_dataset(df : DataFrame):
         df.loc[i,'dinner_time'] = dinner_time
         df.loc[i,'evening'] = evening
         df.loc[i,'early_morning'] = early_morning
-        #df.loc[i,'season'] = season
     
     
     df = df.drop("record_date",axis=1)
