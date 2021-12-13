@@ -15,16 +15,26 @@ def remove_outliers(df : DataFrame, category):
     IQR = Q3 - Q1
 
     # Above Upper bound
-    df.loc[(df[category] > Q3+1.5*IQR),[category]] = Q3+1.5*IQR
+    upper = df[category] >= (Q3+2*IQR)
+
+    toRemoveUpper = np.where(upper)[0].tolist()
 
     # Below Lower bound
-    df.loc[(df[category] < Q1-1.5*IQR),[category]] = Q1-1.5*IQR
+    lower = df[category] <= (Q1-2*IQR)
+
+    toRemoveLower = np.where(lower)[0].tolist()
+
+    toRemove = list(set(toRemoveUpper + toRemoveLower))
+
+    df.drop(toRemove,axis=0,inplace=True)
+    df = df.reset_index(drop=True)
 
     return df
 
 
 
-def treat_dataset(df : DataFrame):
+
+def treat_dataset(df : DataFrame, training = True):
 
     #Todos os valores são iguais nessas colunas portanto podemos remove-las
     df = df.drop(["city_name","AVERAGE_PRECIPITATION"],axis=1)
@@ -100,13 +110,19 @@ def treat_dataset(df : DataFrame):
     
     df = df.drop("record_date",axis=1)
 
-    if 'AVERAGE_SPEED_DIFF' in cols:
+    if training:
         cols.remove('AVERAGE_SPEED_DIFF')
-    cols.remove('record_date')
-    cols.remove('AVERAGE_TIME_DIFF')
+        cols.remove('record_date')
 
-    for cat in cols:
-        df = remove_outliers(df,cat)
+        for cat in cols:
+            df = remove_outliers(df,cat)
+
+        print("Dataset size: " + str(len(df)))
 
 
     return df
+
+
+
+
+
